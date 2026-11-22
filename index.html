@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JustiYA | Plataforma de Servicios y Gestiones Jurídicas en Colombia</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="#inicio" class="brand" aria-label="Inicio JustiYA">
+                <span class="brand-icon" aria-hidden="true">⚖️</span>
+                <span class="brand-text">Justi<span class="brand-accent">YA</span></span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="nav-links" id="navLinks" aria-label="Menú principal">
+                <a href="#servicios">Servicios Jurídicos</a>
+                <a href="#dependencias">Encargos y Dependencias</a>
+                <a href="#directorio">Directorio Judicial</a>
+                <a href="#registro">Registro y Validación</a>
+            </nav>
+
+            <div class="nav-actions">
+                <select id="roleSimulator" class="role-select" aria-label="Simular vista por rol">
+                    <option value="ciudadano">Vista: Ciudadano</option>
+                    <option value="abogado">Vista: Abogado Verificado</option>
+                    <option value="estudiante">Vista: Estudiante Activo</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <span class="pill">Colombia · Web & Android</span>
+                <h1>Acceso claro, seguro y verificable a servicios y gestiones jurídicas</h1>
+                <p>
+                    Conectamos ciudadanos con <strong>abogados titulados</strong> y <strong>estudiantes de Derecho
+                        acreditados</strong>
+                    para asesorías, trámites y diligencias presenciales o virtuales en todo el país.
+                </p>
+                <div class="hero-cta">
+                    <a href="#servicios" class="btn btn-primary">Explorar Servicios</a>
+                    <a href="#dependencias" class="btn btn-outline">Solicitar Encargo en Dependencia</a>
+                </div>
+                <div class="hero-trust">
+                    <span>✔ Perfiles verificados</span>
+                    <span>✔ Trazabilidad por estado</span>
+                    <span>✔ Protección de datos (Ley 1581)</span>
+                </div>
+            </div>
+
+            <div class="hero-card" aria-label="Resumen de actividad de cuenta">
+                <h3>Panel Rápido del Usuario</h3>
+                <p class="role-indicator" id="roleDescription">
+                    Estás navegando como <strong>Ciudadano</strong>. Puedes buscar servicios, publicar encargos y hacer
+                    seguimiento.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-number" id="statServicios">6</span>
+                        <span class="stat-label">Servicios activos</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="statEncargos">2</span>
+                        <span class="stat-label">Encargos en curso</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Identidad validada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="servicios" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Servicios Jurídicos y Actividades de Apoyo</h2>
+                        <p>Filtra por área del Derecho, ciudad o modalidad. Cada prestador muestra claramente su rol
+                            validado.</p>
+                    </div>
+                </div>
+
+                <form class="filter-bar" id="filterForm" aria-label="Filtrar servicios">
+                    <div class="form-group">
+                        <label for="filtroCategoria">Categoría</label>
+                        <select id="filtroCategoria">
+                            <option value="todas">Todas las áreas</option>
+                            <option value="Civil">Derecho Civil</option>
+                            <option value="Familia">Derecho de Familia</option>
+                            <option value="Laboral">Derecho Laboral</option>
+                            <option value="Penal">Derecho Penal</option>
+                            <option value="Apoyo">Gestión / Apoyo Estudiantil</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroCiudad">Ciudad</label>
+                        <select id="filtroCiudad">
+                            <option value="todas">Todas las ciudades</option>
+                            <option value="Bogotá">Bogotá D.C.</option>
+                            <option value="Medellín">Medellín</option>
+                            <option value="Cali">Cali</option>
+                            <option value="Barranquilla">Barranquilla</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroModalidad">Modalidad</label>
+                        <select id="filtroModalidad">
+                            <option value="todas">Virtual y Presencial</option>
+                            <option value="Virtual">Virtual</option>
+                            <option value="Presencial">Presencial</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group filter-action">
+                        <button type="button" id="btnLimpiarFiltros" class="btn btn-secondary">Limpiar filtros</button>
+                    </div>
+                </form>
+
+                <div id="serviciosGrid" class="cards-grid" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section id="dependencias" class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Módulo de Encargos y Dependencias</h2>
+                        <p>Solicita radicación, revisión de expedientes o trámites en juzgados, notarías o entidades de
+                            cualquier ciudad.</p>
+                    </div>
+                </div>
+
+                <div class="two-col-layout">
+                    <div class="card">
+                        <h3>Publicar Nuevo Encargo</h3>
+                        <form id="encargoForm">
+                            <div class="form-group">
+                                <label for="tipoGestion">Tipo de gestión *</label>
+                                <select id="tipoGestion" required>
+                                    <option value="">Selecciona una opción...</option>
+                                    <option value="Revisión de expediente físico">Revisión de expediente físico</option>
+                                    <option value="Radicación de memorial / oficio">Radicación de memorial / oficio
+                                    </option>
+                                    <option value="Solicitud de copias auténticas">Solicitud de copias auténticas
+                                    </option>
+                                    <option value="Trámite notarial o administrativo">Trámite notarial o administrativo
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ciudadEncargo">Ciudad *</label>
+                                    <input type="text" id="ciudadEncargo" placeholder="Ej. Bogotá D.C." required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="modalidadEncargo">Modalidad *</label>
+                                    <select id="modalidadEncargo" required>
+                                        <option value="Presencial">Presencial en entidad</option>
+                                        <option value="Virtual">Virtual / Ventanilla digital</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="entidadEncargo">Entidad o dependencia *</label>
+                                <input type="text" id="entidadEncargo"
+                                    placeholder="Ej. Juzgado 14 Civil Municipal / Notaría 22" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="instruccionesEncargo">Instrucciones detalladas *</label>
+                                <textarea id="instruccionesEncargo" rows="3"
+                                    placeholder="Describe qué debe solicitarse, entregarse o consultarse..."
+                                    required></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="valorEncargo">Valor ofrecido (COP) *</label>
+                                    <input type="number" id="valorEncargo" min="20000" step="5000"
+                                        placeholder="Ej. 60000" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="soporteEncargo">Documento soporte (PDF)</label>
+                                    <input type="file" id="soporteEncargo" accept=".pdf" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Publicar Solicitud de
+                                Encargo</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <h3>Solicitudes Recientes y Seguimiento (RN-09)</h3>
+                        <div id="listaEncargos" class="stack-list" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="directorio" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Directorio de Dependencias</h2>
+                        <p>Consulta información verificada de juzgados, notarías, comisarías y centros de conciliación.
+                        </p>
+                    </div>
+                    <div class="search-box">
+                        <label for="buscarDirectorio" class="sr-only">Buscar dependencia</label>
+                        <input type="search" id="buscarDirectorio"
+                            placeholder="Buscar por entidad, ciudad o trámite..." />
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Entidad / Dependencia</th>
+                                <th>Tipo</th>
+                                <th>Ciudad y Dirección</th>
+                                <th>Horario y Contacto</th>
+                                <th>Actualización</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDirectorio"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="registro" class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Registro y Validación de Perfiles</h2>
+                        <p>El formulario adapta los soportes requeridos según el rol seleccionado para garantizar
+                            transparencia y seguridad.</p>
+                    </div>
+                </div>
+
+                <div class="card form-centered">
+                    <form id="registroForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regNombres">Nombres y Apellidos *</label>
+                                <input type="text" id="regNombres" placeholder="Nombre completo" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="regDocumento">Número de Documento (CC / CE) *</label>
+                                <input type="text" id="regDocumento" placeholder="Ej. 1012345678" required />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regCorreo">Correo electrónico *</label>
+                                <input type="email" id="regCorreo" placeholder="usuario@correo.com" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="regPerfil">Tipo de perfil a registrar *</label>
+                                <select id="regPerfil" required>
+                                    <option value="ciudadano">Ciudadano / Cliente</option>
+                                    <option value="abogado">Abogado Titulado</option>
+                                    <option value="estudiante">Estudiante de Derecho</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="camposAbogado" class="dynamic-fields hidden">
+                            <h4>Soportes de Validación · Abogado (Sección 3.2)</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tarjetaProfesional">Número de Tarjeta Profesional *</label>
+                                    <input type="text" id="tarjetaProfesional" placeholder="Ej. TP-298451" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="especialidadAbogado">Área principal de especialidad</label>
+                                    <input type="text" id="especialidadAbogado"
+                                        placeholder="Ej. Derecho Laboral y Seguridad Social" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="archivoTp">Cargar Documento de Identidad y Tarjeta Profesional
+                                    (PDF/JPG)</label>
+                                <input type="file" id="archivoTp" accept=".pdf,.jpg,.png" />
+                            </div>
+                        </div>
+
+                        <div id="camposEstudiante" class="dynamic-fields hidden">
+                            <h4>Soportes de Validación · Estudiante de Derecho (Sección 3.3)</h4>
+                            <p class="notice-info">
+                                Nota normativa (RN-03): La validación habilita únicamente actividades de apoyo
+                                permitidas y no faculta para representación judicial.
+                            </p>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="universidadEst">Institución Universitaria *</label>
+                                    <input type="text" id="universidadEst"
+                                        placeholder="Ej. Universidad Nacional de Colombia" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="semestreEst">Semestre actual</label>
+                                    <input type="text" id="semestreEst" placeholder="Ej. 8° Semestre" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="certificadoEst">Certificado de estudiante activo vigente (PDF)</label>
+                                <input type="file" id="certificadoEst" accept=".pdf" />
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" id="aceptaDatos" required />
+                            <label for="aceptaDatos">
+                                Autorizo el tratamiento de mis datos personales y documentos de validación conforme a la
+                                Ley 1581 de 2012 (RN-13).
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Enviar Registro para Revisión</button>
+                    </form>
+
+                    <div id="registroFeedback" class="feedback-box hidden" role="status"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="servicioModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+        <div class="modal-content">
+            <button class="modal-close" id="cerrarModal" aria-label="Cerrar ventana">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <strong>JustiYA · Proyecto de Software</strong>
+                <p>Plataforma digital de servicios y gestiones jurídicas para Colombia (Web + Android).</p>
+            </div>
+            <div>
+                <p><strong>Marco Normativo y Alcance:</strong></p>
+                <p>Tratamiento de datos según Ley 1581 de 2012. Pagos e integraciones judiciales sujetos a validación
+                    técnica y legal (Etapa 5).</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
